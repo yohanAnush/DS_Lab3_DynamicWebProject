@@ -96,13 +96,18 @@ public class Receiver implements MessageListener {
 	@Override
 	public void onMessage(Message message) {
 		// without casting, we can extract the text within the message.
-		TextMessage txtMsg = (TextMessage)message;	
-        		
-		try {
-			System.out.println(txtMsg.getText());
-		} catch (JMSException jmse) {
-	    		System.err.println("Unable to retrive message!");
-	    		//e.printStackTrace();
+		if (message instanceof TextMessage) {
+			TextMessage txtMsg = (TextMessage)message;	
+    		
+			try {
+				System.out.println(txtMsg.getText());
+			} catch (JMSException jmse) {
+		    		System.err.println("Unable to retrive message!");
+		    		//e.printStackTrace();
+			}
+		}
+		else {
+			System.err.println("Received message is not a TextMessage.");
 		}
 	}
 }
